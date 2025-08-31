@@ -1,307 +1,836 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="keywords" content="HaiWu, Hai Wu, Hai Wu xmu, Hai Wu, Xiamen University, 吴海, 厦大, 厦门大学, PCL, Hailanyi,Computer,Vision,Machine,Learning,Detection,3D,Autonomous,Driving">
-    <meta name="msvalidate.01" content="F525E5178C5E4AD612E361B2FA525A2E" />
-    <link href="css.css" rel="stylesheet" type="text/css">
-    <title>Hai Wu's Homepage (PCL)</title>
-    <link rel="icon" href="image/icon.png">
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Wu's Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #66ccff;
+            --secondary-color: #333;
+            --accent-color: #333;
+            --text-color: #333;
+            --light-text: #66ccff;
+            --card-bg: rgba(235, 235, 255, 0.8);
+            --gradient-start: #FFFFFF;
+            --gradient-end: #1E90FF;
+            --sidebar-width: 280px; /* 控制左侧卡片宽度 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 粒子背景 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr; /* 使用变量控制布局 */
+            gap: 30px;
+        }
+
+        /* 左侧卡片样式 */
+        .profile-card {
+            /*background: var(--card-bg);*/
+            /*backdrop-filter: blur(10px);*/
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100vh;
+            position: sticky;
+            top: 20px;
+            width: 100%; /* 宽度由父元素控制 */
+                        display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 宽度控制面板 */
+        .width-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+
+        .width-control h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+
+        .width-control input {
+            width: 100%;
+        }
+
+        .width-value {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-ball {
+            text-align: justify;
+            width: 300px;
+            height: 300px;
+            top: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 0px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .profile-title {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .profile-info {
+            font-size: 14px;
+            text-align: justify;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+
+        .social-links {
+            font-size: 14px;
+            text-align: justify;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 20px;
+            margin-top: 10px;
+        }
+
+
+        .social-log {
+            font-size: 14px;
+            text-align: center;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Content section */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s forwards;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        /* News section */
+        .news-item {
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .news-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Publications */
+        .publications-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        .publication-item {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(5px);
+        }
+
+        .publication-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-content h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .publication-authors {
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .publication-venue {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .publication-links a {
+            display: inline-block;
+            margin-right: 15px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .publication-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .more-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .more-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Activities & Awards */
+        .activities-list, .awards-list {
+            list-style-type: none;
+        }
+
+        .activities-list li, .awards-list li {
+            margin-bottom: 5px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .activities-list li:before, .awards-list li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--light-text);
+            opacity: 0.8;
+        }
+
+        .quote {
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1100px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .publication-item {
+                grid-template-columns: 1fr;
+            }
+
+            .publication-img {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
 <body>
+    <div id="particles-js"></div>
+
     <div class="container">
-
-	<table border="0" id="table1" width="820">
-		<tbody>
-			<tr>
-				<td width="210">
-					<p align="center"><font face="Arial"><img border="0" src="image/wh3.png" width="210" height="210"></font></p>
-				</td>
-				<td width="0">
-					<p><font face="Arial" size="4"><a href="https://scholar.google.com/citations?user=OV7Yt14AAAAJ&hl=en"><font color="#66ccff">Homepage of Google Scholar</font></a> </font></p>
-					<p><font face="Arial" size="5"><b>&nbsp;Hai Wu <span lang="zh-cn">吴海 (XMU, PCL)</span></b></font></p>
-					<p><font face="Arial" size="4"><a href="https://github.com/hailanyi"><font color="#66ccff">Homepage of GitHub Projects</font></a></font></p>
-<!--					<p><font face="Arial" size="4">wuhai@stu.xmu.edu.cn</font></p>-->
-				</td>
-			</tr>
-		</tbody>
-	</table>
+        <!-- Left Profile Card -->
+        <div class="profile-card">
+            <img src="image/wh.png" alt="Hai Wu" class="profile-img">
+            <h1 class="profile-name">Hai Wu (吴海)</h1>
 
 
-<p><font face="Arial" size="4">I am currently an assistant researcher at PCL, Shenzhen, China. I received my PhD from Xiamen University in December 2024.
+             <div class="social-log">
+            <p > <i class="fas fa-user"></i> Assistant Researcher </p>
+            <p > <i class="fas fa-building"></i> Pengcheng Laboratory </p>
+            <p > <i class="fas fa-map-marker-alt"> </i> Shenzhen, China </p>
+            <p > <i class="fas fa-graduation-cap"> </i> Xiamen University </p>
+
+            </div>
+
+            <div class="profile-info">
+                <p> I am currently an assistant researcher at PCL, Shenzhen, China. I received my PhD from Xiamen University in December 2024.
 	My research interests focus on computer vision and machine learning, particularly in exploring machine learning for autonomous systems. This includes 3D scene understanding,
-	object detection, and other topics.
-</font></p>
-<p><font face="Arial" size="4">
-	Email: wuhai@stu.xmu.edu.cn wuh05@pcl.ac.cn
-</font></p>
+	object detection, and other topics. </p>
 
-<!--<p>-->
+            </div>
 
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
-<!--<span class="style8"><font face="Arial" color="#66ccff">-->
-<!--   wuhai@stu.xmu.edu.cn-->
-<!--</font>-->
-<!--</span>&nbsp;&nbsp;-->
-<!--<span class="style8"><font face="Arial" color="#66ccff">-->
-<!--    wuh05@pcl.ac.cn-->
-<!--</font>-->
-<!--	<br></font></strong></span>-->
-<!--   </p>-->
+            <div class="social-links">
+                <a href="https://scholar.google.com/citations?user=OV7Yt14AAAAJ&hl=en" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                <a href="https://github.com/hailanyi" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto: wuhai@stu.xmu.edu.cn" title="wuhai@stu.xmu.edu.cn"><i class="fas fa-envelope"></i></a>
+                <a href="mailto: wuh05@pcl.ac.cn" title="wuh05@pcl.ac.cn"><i class="fas fa-envelope"></i></a>
+            </div>
+
+            <div class="social-log">
+
+<a href='https://clustrmaps.com/site/1c0b2'  title='Visit tracker'><img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=220&t=n&d=ilqA5GNJCkpARTKQ5PEMa4KL1M4wI92q3Q9UEoKSc-Q&co=98d5ff'/></a>
+            <p class="social-log">© Hai Wu, 2023 - 2025</p>
+            </div>
 
 
-<h2 id="news"><font face="Arial" size="4" color="#66ccff"><i class="fa fa-window-restore"></i> News</font></h2>
+        </div>
 
-<p><font face="Arial" size="4">[2025/08] One paper accepted by TPAMI.</font><br>
-<font face="Arial" size="4">[2025/07] Two papers accepted by ICCV 2025.</font><br>
-<font face="Arial" size="4">[2025/03] One paper accepted by CVPR 2025.</font><br>
-<font face="Arial" size="4">[2025/01] Two papers accepted by AAAI 2025.</font><br>
-<font face="Arial" size="4">[2024/07] One paper accepted by ECCV 2024.</font><br>
-<font face="Arial" size="4">[2024/03] Two papers accepted by CVPR 2024.</font><br>
-<font face="Arial" size="4">[2023/10] One paper accepted by AAAI 2024.</font><br>
-<font face="Arial" size="4">[2023/10] One paper accepted by ICCV 2023.</font><br>
-<font face="Arial" size="4">[2023/05] One paper accepted by CVPR 2023.</font></p>
+        <!-- Right Content -->
+        <div class="content">
+            <!-- News Section -->
 
-<!--  color="#66ccff" !-->
+            <section class="section">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> News</h2>
 
-<h2 id="Publications"><font face="Arial" size="4" color="#66ccff"><i class="fa fa-file-powerpoint"></i> Publications</font></h2>
+                <ul class="awards-list">
+                <li> <span class="news-date">[2025/08]</span> One paper accepted by <span class="highlight">IEEE TPAMI</span>. </li>
 
-<table border="0" style="border-width: 0px;" width="820">
-    <tbody>
-	    	<tr>
-			<td ><a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Zhao_SP3D_Boosting_Sparsely-Supervised_3D_Object_Detection_via_Accurate_Cross-Modal_Semantic_CVPR_2025_paper.pdf"> <img src="image/SP3D.png" width="210" height="110"></a></td>
-			<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-				<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">SP3D: Boosting Sparsely-Supervised 3D Object Detection via Accurate Cross-Modal Semantic Prompts</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-					<font color="#000000" face="Arial" size="2"> Shijia Zhao, Qiming Xia, Xusheng Guo, Pufan Zou, Maoji Zheng, <b>Hai Wu</b>, Chenglu Wen, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-					<font face="Arial" size="2">CVPR. 2025</font><br>
-				<font face="Arial" size="2">
-				<a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Zhao_SP3D_Boosting_Sparsely-Supervised_3D_Object_Detection_via_Accurate_Cross-Modal_Semantic_CVPR_2025_paper.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Zhao_SP3D_Boosting_Sparsely-Supervised_3D_Object_Detection_via_Accurate_Cross-Modal_Semantic_CVPR_2025_paper.pdf"><font color="#808080" face="Arial" size="2">code</font></a></b>
-			</td>
-			</tr>
-	        <tr>
-			<td ><a href="https://ojs.aaai.org/index.php/AAAI/article/view/32397/34552"> <img src="image/L4dr.png" width="210" height="110"></a></td>
-			<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-				<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">L4dr: Lidar-4dradar fusion for weather-robust 3d object detection</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-					<font color="#000000" face="Arial" size="2"> Xun Huang, Ziyu Xu, <b>Hai Wu</b>, Jinlong Wang, Qiming Xia, Yan Xia, Jonathan Li, Kyle Gao, Chenglu Wen, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-					<font face="Arial" size="2">AAAI. 2025</font><br>
-				<font face="Arial" size="2">
-				<a href="https://ojs.aaai.org/index.php/AAAI/article/view/32397/34552"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/ylwhxht/L4DR"><font color="#808080" face="Arial" size="2">code</font></a></b>
-			</td>
-			</tr>
+                <li> <span class="news-date">[2025/07]</span> Two papers accepted by <span class="highlight">ICCV 2025</span>.</li>
 
-	    	<tr>
-			<td ><a href="https://ojs.aaai.org/index.php/AAAI/article/download/33150/35305"> <img src="image/Seg2Box.png" width="210" height="110"></a></td>
-			<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-				<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Seg2Box: 3D Object Detection by Point-Wise Semantics Supervision</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-					<font color="#000000" face="Arial" size="2">  Maoji Zheng, Ziyu Xu, Qiming Xia, <b>Hai Wu</b>, Chenglu Wen, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-					<font face="Arial" size="2">AAAI. 2025</font><br>
-				<font face="Arial" size="2">
-				<a href="https://ojs.aaai.org/index.php/AAAI/article/download/33150/35305"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://ojs.aaai.org/index.php/AAAI/article/download/33150/35305"><font color="#808080" face="Arial" size="2">code</font></a></b>
-			</td>
-			</tr>
-	        <tr>
-			<td ><a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/07443.pdf"> <img src="image/CMD.jpg" width="210" height="110"></a></td>
-			<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-				<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">CMD: A Cross Mechanism Domain Adaptation Dataset for 3D Object Detection</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-					<font color="#000000" face="Arial" size="2"> Jinhao Deng, Wei Ye, <b>Hai Wu</b>, Qiming Xia, Xun Huang, Xin Li, Jin Fang, Wei Li, Chenglu Wen, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-					<font face="Arial" size="2">ECCV. 2024</font><br>
-				<font face="Arial" size="2">
-				<a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/07443.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/im-djh/CMD"><font color="#808080" face="Arial" size="2">code</font></a></b>
-			</td>
-			</tr>
-			<tr>
-			<td ><a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Xia_HINTED_Hard_Instance_Enhanced_Detector_with_Mixed-Density_Feature_Fusion_for_CVPR_2024_paper.pdf"> <img src="image/HINTED.jpg" width="210" height="110"></a></td>
-			<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-				<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">HINTED: Hard Instance Enhanced Detector with Mixed-Density Feature Fusion for Sparsely-Supervised 3D Object Detection</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-					<font color="#000000" face="Arial" size="2"> Qiming Xia, Wei Ye, <b>Hai Wu</b>, Shijia Zhao, Leyuan Xing, Xun Huang, Jinhao Deng, Xin Li, Chenglu Wen, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-					<font face="Arial" size="2">CVPR. 2024</font><br>
-				<font face="Arial" size="2">
-				<a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Xia_HINTED_Hard_Instance_Enhanced_Detector_with_Mixed-Density_Feature_Fusion_for_CVPR_2024_paper.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/xmuqimingxia/HINTED"><font color="#808080" face="Arial" size="2">code</font></a></b>
-			</td>
-			</tr>
-    		<tr>
-				<td > <a href="https://arxiv.org/pdf/2404.16493"><img src="image/cpd.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Commonsense Prototype for Outdoor Unsupervised 3D Object Detection</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-						<font color="#000000" face="Arial" size="2"><b>Hai Wu</b>, Shijia Zhao, Xun Huang, Chenglu Wen, Xin Li, and Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">CVPR. 2024</font><br>
-					<font face="Arial" size="2">
-					<a href="https://arxiv.org/pdf/2404.16493"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/hailanyi/CPD"><font color="#808080" face="Arial" size="2">code</font></a></b>
-				</td>
-			</tr>
-    		<tr>
-				<td > <a href="https://arxiv.org/pdf/2402.18493"><img src="image/SunshinetoRainstorm.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Sunshine to Rainstorm: Cross-Weather Knowledge Distillation for Robust 3D Object Detection</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-						<font color="#000000" face="Arial" size="2">Xun Huang*, <b>Hai Wu*</b>, Xin Li, Xiaoliang Fan, Chenglu Wen, and Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">AAAI. 2024</font><br>
-					<font face="Arial" size="2">
-					<a href="https://arxiv.org/pdf/2402.18493"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/ylwhxht/SRKD-DRET"><font color="#808080" face="Arial" size="2">code</font></a></b>
-				</td>
-			</tr>
-    		<tr>
-				<td ><a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Wu_Virtual_Sparse_Convolution_for_Multimodal_3D_Object_Detection_CVPR_2023_paper.pdf"> <img src="image/virconv.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Virtual Sparse Convolution for Multimodal 3D Object Detection</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-						<font color="#000000" face="Arial" size="2"><b>Hai Wu</b>, Chenglu Wen, Shaoshuai Shi, Xin Li, Chenglu Wen, and Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">CVPR. 2023</font><br>
-					<font face="Arial" size="2">
-					<a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Wu_Virtual_Sparse_Convolution_for_Multimodal_3D_Object_Detection_CVPR_2023_paper.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/hailanyi/VirConv"><font color="#808080" face="Arial" size="2">code</font></a></b>
-				</td>
-			</tr>
-        	<tr>
-				<td > <a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Xia_CoIn_Contrastive_Instance_Feature_Mining_for_Outdoor_3D_Object_Detection_ICCV_2023_paper.pdf"><img src="image/COIN.jpg" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">CoIn: Contrastive Instance Feature Mining for Outdoor 3D Object Detection with Very Limited Annotations</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-						<font color="#000000" face="Arial" size="2">Qiming Xia, Jinhao Deng, Chenglu Wen, <b>Hai Wu</b>, Shaoshuai Shi, Xin Li, and Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">ICCV. 2023</font><br>
-					<font face="Arial" size="2">
-					<a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Xia_CoIn_Contrastive_Instance_Feature_Mining_for_Outdoor_3D_Object_Detection_ICCV_2023_paper.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/xmuqimingxia/CoIn"><font color="#808080" face="Arial" size="2">code</font></a></b>
-				</td>
-			</tr>
-            <tr>
-				<td > <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25380/25152"><img src="image/TED.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Transformation-equivariant 3D object detection for autonomous driving</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2"><b>Hai Wu</b>, Chenglu Wen, Wei Li, Xin Li, Ruigang Yang, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">AAAI. 2023</font><br>
-					<font face="Arial" size="2">
-					<a href="https://ojs.aaai.org/index.php/AAAI/article/view/25380/25152"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/hailanyi/TED"><font color="#808080" face="Arial" size="2">code</font></a></b>
-				</td>
-			</tr>
-            <tr>
-				<td > <a href="https://ieeexplore.ieee.org/abstract/document/9870747"><img src="image/casa.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">CasA: A cascade attention network for 3-D object detection from LiDAR point clouds</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2"><b>Hai Wu</b>, Jinhao Deng, Chenglu Wen, Xin Li, Cheng Wang, and Jonathan Li</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">IEEE TGRS. 2022</font><br>
-					<font face="Arial" size="2">
-					<a href="https://ieeexplore.ieee.org/abstract/document/9870747"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;<b><a href="https://github.com/hailanyi/CasA"><font color="#808080" face="Arial" size="2">code</font></a></b>
-				</td>
-			</tr>
-            <tr>
-				<td > <a href="https://ieeexplore.ieee.org/abstract/document/10091688"><img src="image/SemanticFlow.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">SemanticFlow: Semantic Segmentation of Sequential LiDAR Point Clouds From Sparse Frame Annotations</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2">Junhao Zhao, Weijie Huang, <b>Hai Wu</b>, Chenglu Wen,Yulan Guo, and Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">IEEE TGRS. 2023</font><br>
-					<font face="Arial" size="2">
-					<a href="https://ieeexplore.ieee.org/abstract/document/10091688"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-            <tr>
-				<td ><a href="https://link.springer.com/content/pdf/10.1007/s41095-021-0260-6.pdf"><font color="#808080"> <img src="image/BLNet.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">BLNet: Bidirectional learning network for point clouds</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2">Wenkai Han, <b>Hai Wu</b>, Chenglu Wen, Cheng Wang, Xin Li</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">Computational Visual Media. 2022</font><br>
-					<font face="Arial" size="2">
-					<a href="https://link.springer.com/content/pdf/10.1007/s41095-021-0260-6.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-            <tr>
-				<td > <a href="https://web.archive.org/web/20210813010629id_/https://www.ijcai.org/proceedings/2021/0161.pdf"><img src="image/Tracklet.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Tracklet Proposal Network for Multi-Object Tracking on Point Clouds</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2"> <b>Hai Wu</b>, Qing Li, Chenglu Wen, Xin Li, Xiaoliang Fan, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">IJCAI. 2021</font><br>
-					<font face="Arial" size="2">
-					<a href="https://web.archive.org/web/20210813010629id_/https://www.ijcai.org/proceedings/2021/0161.pdf"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-            <tr>
-				<td ><a href="https://ieeexplore.ieee.org/abstract/document/9352500"> <img src="image/tracking.gif" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">3D multi-object tracking in point clouds based on prediction confidence-guided data association</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2"> <b>Hai Wu</b>, Wenkai Han, Chenglu Wen, Xin Li, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">IEEE TITS. 2021</font><br>
-					<font face="Arial" size="2">
-					<a href="https://ieeexplore.ieee.org/abstract/document/9352500"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-            <tr>
-				<td > <a href="https://drive.google.com/file/d/1H0q43zfr5t2ozohzFAJs3RlHSN4-V6Y_/view"><img src="image/human_trajectory.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Indoor 3D human trajectory reconstruction using surveillance camera videos and point clouds</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2">Yudi Dai, Chenglu Wen, <b>Hai Wu</b>, Yulan Guo, Longbiao Chen, Cheng Wang</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">IEEE Transactions on Circuits and Systems for Video Technology. 2021</font><br>
-					<font face="Arial" size="2">
-					<a href="https://drive.google.com/file/d/1H0q43zfr5t2ozohzFAJs3RlHSN4-V6Y_/view"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-            <tr>
-				<td ><a href="https://www.sciencedirect.com/science/article/pii/S0924271619301947"> <img src="image/boundary.png" width="210" height="110"></a></td>
-				<td style="border-style: none; border-width: medium;" valign="top" width="1108">
-					<p style="margin-left: 10px; line-height: 150%; margin-top: 8px; margin-bottom: 8px;"><i><font face="Arial">Recovery of urban 3D road boundary via multi-source data</font></i><font face="Arial"><i><font style="font-size: 12pt;"><br></font></i></font>
-                        <font color="#000000" face="Arial" size="2">Chenglu Wen, Changbin You, <b>Hai Wu</b>, Cheng Wang, Xiaoliang Fan, Jonathan Li</font><b><font color="#000000" face="Arial" size="2"><br></font></b>
-						<font face="Arial" size="2">ISPRS Journal of Photogrammetry and Remote Sensing. 2019</font><br>
-					<font face="Arial" size="2">
-					<a href="https://www.sciencedirect.com/science/article/pii/S0924271619301947"><font color="#808080"><font color="#808080">paper</font></font></a>&nbsp;&nbsp;&nbsp;
-				</td>
-			</tr>
-    <tbody>
-</table>
+                <li>  <span class="news-date">[2025/03]</span> One paper accepted by <span class="highlight">CVPR 2025</span>.</li>
+
+                <li>  <span class="news-date">[2025/01]</span> Two papers accepted by <span class="highlight">AAAI 2025</span>.</li>
+
+                <li>  <span class="news-date">[2024/07]</span> One paper accepted by <span class="highlight">ECCV 2024</span>.</li>
+
+                <li>   <span class="news-date">[2024/03]</span> Two papers accepted by <span class="highlight">CVPR 2024</span>.</li>
+                <li>   <span class="news-date">[2023/10]</span>  One paper accepted by <span class="highlight">ICCV 2023</span>.</li>
+                <li>   <span class="news-date">[2023/05]</span> One paper accepted by <span class="highlight">CVPR 2023</span>.</li>
+
+                </ul>
 
 
 
-<h2 id="activities"><font face="Arial" size="4" color="#66ccff"><i class="fa fa-male"></i> Activities</font></h2>
-
-
-	  <p style="margin-top:0px;margin-bottom:-10px;"><font face="Arial" size="3"><b>Reviewer:</b></font></p><br />
-      <p>  <font face="Arial" size="3"> IEEE Conference on Computer Vision and Pattern Recognition (CVPR)<br />
-	  Conference on Neural Information Processing Systems (NeurIPS) <br />
-	  International Conference on Learning Representation (ICLR) <br />
-      AAAI Conference on Artificial Intelligence (AAAI)<br />
-      IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)<br />
-      IEEE Transactions on Image Processing (TIP)<br />
-      IEEE Transactions on Geoscience and Remote Sensing (TGRS)<br />
-	  IEEE Transactions on Intelligent Transportation Systems (TITS)<br />
-
-<!--	  <p style="margin-top:0px;margin-bottom:-10px;"><font face="Arial" size="3"><b>Presentation:</b></font></p><br />-->
-<!--      <p>  <font face="Arial" size="3"> Commonsense Prototype for Outdoor Unsupervised 3D Object Detection, CVPR, USA, Seattle, 2024<br />-->
-<!--      <p>  <font face="Arial" size="3"> Virtual Sparse Convolution for Multimodal 3D Object Detection, CVPR, Vancouver, Canada, 2023<br />-->
-<!--      Transformation-equivariant 3D object detection for autonomous driving, AAAI, Washington, D.C., USA, 2023<br />-->
-<!--	  Tracklet Proposal Network for Multi-Object Tracking on Point Clouds, Japan, 2021</font></p>-->
-
-	  <p style="margin-top:0px;margin-bottom:-10px;"><b><font face="Arial" size="3">Internship:</font></b></p><br />
-	  <p> <font face="Arial" size="3"> Research Intern, March 2022 - June 2022, Inceptio technology, Shanghai, China.<br /> Advised by Ruigang Yang.</font></p>
-
-
-<h2 id="awards"><font face="Arial" size="4" color="#66ccff"><i class="fa fa-trophy"></i> Academic Competition and Awards</font></h2>
-
-  <p><font face="Arial" size="3">
-   National scholarship, 2023<br />
-   Second prize in data processing at LiDAR Conference, 2023<br />
-   VirConv-S ranks No.1(car) on the KITTI 2D, 3D and BEV detection leaderboard, 11/2022 <br />
-   VirConvTrack ranks No.1(car) on the KITTI tracking leaderboard, 11/2022 <br />
-   CasTrack ranks No.1(car) on the KITTI tracking leaderboard, 09/2022 <br />
-   TED ranks No.1(car) on the KITTI 3D detection leaderboard, 05/2022 <br />
-   PC-TCNN ranks No.1(car) on the KITTI tracking leaderboard, 01/2021 <br />
-   Excellent student scholarship, 2021
-</font><br /></p>
 
 
 
-<table border="0" id="table2" width="700">
-<tbody>
-	<tr>
-		<td width="220">
-			<script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=ilqA5GNJCkpARTKQ5PEMa4KL1M4wI92q3Q9UEoKSc-Q&w=210&t=tt&ct=00c5ff"></script>
-<!--			<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=00c5ff&w=a&t=tt&d=ilqA5GNJCkpARTKQ5PEMa4KL1M4wI92q3Q9UEoKSc-Q&ct=00c5ff&co=ffffff'></script>-->
-		</td>
-		<td width="0">
-			<p><font face="Arial" size="4" color="#66ccff">The journey is long and arduous </font></p>
-			<p><font face="Arial" size="5">&nbsp;<b><span lang="zh-cn">路漫漫其修远兮，吾将上下而求索</span></b></font></p>
-            <p><font face="Arial" size="4" color="#66ccff"> I will explore it with unyielding spirit</font></p>
-		</td>
-	</tr>
-</tbody>
-</table>
+            </section>
+
+            <!-- Publications Section -->
+            <section class="section delay-1">
+                <h2 class="section-title"><i class="fas fa-file-alt"></i> Selected Publications</h2>
+
+                <div class="publications-container">
+                    <!-- Publication 1 -->
+
+                      <div class="publication-item ">
+                        <div class="publication-content">
+                            <h3>Unsupervised 3D Object Detection by Commonsense Clue</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Shijia Zhao, Xun Huang, Qiming Xia, Chenglu Wen, Li Jiang, Xin Li, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">TPAMI 2025</a>
+                                <a href="https://ieeexplore.ieee.org/abstract/document/11124320/"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/cpd2.png" alt="Publication" class="publication-img">
+                      </div>
+
+                     <div class="publication-item ">
+                        <div class="publication-content">
+                            <h3>Commonsense Prototype for Outdoor Unsupervised 3D Object Detection</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Shijia Zhao, Xun Huang, Chenglu Wen, Xin Li, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">CVPR 2024</a>
+                                <a href="https://arxiv.org/pdf/2404.16493"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/hailanyi/CPD"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/cpd.png" alt="Publication" class="publication-img">
+                    </div>
+
+                     <div class="publication-item">
+                        <div class="publication-content">
+                            <h3>Virtual Sparse Convolution for Multimodal 3D Object Detection</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Chenglu Wen, Shaoshuai Shi, Xin Li, Chenglu Wen, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">CVPR 2023</a>
+                                <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Wu_Virtual_Sparse_Convolution_for_Multimodal_3D_Object_Detection_CVPR_2023_paper.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/hailanyi/VirConv"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/virconv.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item ">
+                        <div class="publication-content">
+                            <h3>Transformation-equivariant 3D object detection for autonomous driving</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Chenglu Wen, Wei Li, Xin Li, Ruigang Yang, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">AAAI 2023</a>
+                                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25380/25152"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/hailanyi/TED"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/TED.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item ">
+                        <div class="publication-content">
+                            <h3>CasA: A cascade attention network for 3-D object detection from LiDAR point clouds</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Jinhao Deng, Chenglu Wen, Xin Li, Cheng Wang, Jonathan Li</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">IEEE TGRS 2022</a>
+                                <a href="https://ieeexplore.ieee.org/abstract/document/9870747"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/hailanyi/CasA"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/casa.png" alt="Publication" class="publication-img">
+                    </div>
 
 
- &emsp; © Hai Wu, 2023 - 2025
+                    <!-- Hidden publications -->
 
-</div>
+
+
+
+                    <div class="publication-item hidden">
+
+                        <div class="publication-content">
+                            <h3>SP3D: Boosting Sparsely-Supervised 3D Object Detection via Accurate Cross-Modal Semantic Prompts</h3>
+                            <p class="publication-authors">Shijia Zhao, Qiming Xia, Xusheng Guo, Pufan Zou, Maoji Zheng, <b>Hai Wu</b>, Chenglu Wen, Cheng Wang</p>
+
+                            <div class="publication-links">
+                                <a class="publication-venue">CVPR 2025</a>
+                                <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Zhao_SP3D_Boosting_Sparsely-Supervised_3D_Object_Detection_via_Accurate_Cross-Modal_Semantic_CVPR_2025_paper.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+<!--                                <a href="#"><i class="fas fa-code"></i> Code</a>-->
+                            </div>
+                        </div>
+                        <img src="image/SP3D.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <!-- Publication 2 -->
+                    <div class="publication-item hidden">
+
+                        <div class="publication-content">
+                            <h3>L4dr: Lidar-4dradar fusion for weather-robust 3d object detection</h3>
+                            <p class="publication-authors">Xun Huang, Ziyu Xu, <b>Hai Wu</b>, Jinlong Wang, Qiming Xia, Yan Xia, Jonathan Li, Kyle Gao, Chenglu Wen, Cheng Wang</p>
+
+                            <div class="publication-links">
+                                <a class="publication-venue">AAAI 2025</a>
+                                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/32397/34552"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/ylwhxht/L4DR"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/L4dr.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <!-- Publication 3 -->
+                    <div class="publication-item hidden">
+
+                        <div class="publication-content">
+                            <h3>Seg2Box: 3D Object Detection by Point-Wise Semantics Supervision</h3>
+                            <p class="publication-authors">Maoji Zheng, Ziyu Xu, Qiming Xia, <b>Hai Wu</b>, Chenglu Wen, Cheng Wang</p>
+
+                            <div class="publication-links">
+                                <a class="publication-venue">AAAI 2025</a>
+                                <a href="https://ojs.aaai.org/index.php/AAAI/article/download/33150/35305"><i class="fas fa-file-pdf"></i> Paper</a>
+<!--                                <a href="#"><i class="fas fa-code"></i> Code</a>-->
+                            </div>
+                        </div>
+                         <img src="image/Seg2Box.png" alt="Publication" class="publication-img">
+                    </div>
+
+
+
+                    <div class="publication-item hidden">
+
+                        <div class="publication-content">
+                            <h3>CMD: A Cross Mechanism Domain Adaptation Dataset for 3D Object Detection</h3>
+                            <p class="publication-authors">Jinhao Deng, Wei Ye, <b>Hai Wu</b>, Qiming Xia, Xun Huang, Xin Li, Jin Fang, Wei Li, Chenglu Wen, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">ECCV 2024</a>
+                                <a href="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/07443.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/im-djh/CMD"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/CMD.jpg" alt="Publication" class="publication-img">
+                    </div>
+
+                     <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>HINTED: Hard Instance Enhanced Detector with Mixed-Density Feature Fusion for Sparsely-Supervised 3D Object Detection</h3>
+                            <p class="publication-authors">Qiming Xia, Wei Ye, <b>Hai Wu</b>, Shijia Zhao, Leyuan Xing, Xun Huang, Jinhao Deng, Xin Li, Chenglu Wen, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">CVPR 2024</a>
+                                <a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Xia_HINTED_Hard_Instance_Enhanced_Detector_with_Mixed-Density_Feature_Fusion_for_CVPR_2024_paper.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/xmuqimingxia/HINTED"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/HINTED.jpg" alt="Publication" class="publication-img">
+                    </div>
+
+
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>Sunshine to Rainstorm: Cross-Weather Knowledge Distillation for Robust 3D Object Detection</h3>
+                            <p class="publication-authors">Xun Huang*, <b>Hai Wu*</b>, Xin Li, Xiaoliang Fan, Chenglu Wen, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">AAAI 2024</a>
+                                <a href="https://arxiv.org/pdf/2402.18493"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/ylwhxht/SRKD-DRET"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/SunshinetoRainstorm.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>CoIn: Contrastive Instance Feature Mining for Outdoor 3D Object Detection with Very Limited Annotations</h3>
+                            <p class="publication-authors">Qiming Xia, Jinhao Deng, Chenglu Wen, <b>Hai Wu</b>, Shaoshuai Shi, Xin Li, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">ICCV 2023</a>
+                                <a href="https://openaccess.thecvf.com/content/ICCV2023/papers/Xia_CoIn_Contrastive_Instance_Feature_Mining_for_Outdoor_3D_Object_Detection_ICCV_2023_paper.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+                                <a href="https://github.com/xmuqimingxia/CoIn"><i class="fas fa-code"></i> Code</a>
+                            </div>
+                        </div>
+                        <img src="image/COIN.jpg" alt="Publication" class="publication-img">
+                    </div>
+
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>SemanticFlow: Semantic Segmentation of Sequential LiDAR Point Clouds From Sparse Frame Annotations</h3>
+                            <p class="publication-authors">Junhao Zhao, Weijie Huang, <b>Hai Wu</b>, Chenglu Wen, Yulan Guo, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">IEEE TGRS 2023</a>
+                                <a href="https://ieeexplore.ieee.org/abstract/document/10091688"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/SemanticFlow.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>BLNet: Bidirectional learning network for point clouds</h3>
+                            <p class="publication-authors">Wenkai Han, <b>Hai Wu</b>, Chenglu Wen, Cheng Wang, Xin Li</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">Computational Visual Media 2022</a>
+                                <a href="https://link.springer.com/content/pdf/10.1007/s41095-021-0260-6.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/BLNet.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>Tracklet Proposal Network for Multi-Object Tracking on Point Clouds</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Qing Li, Chenglu Wen, Xin Li, Xiaoliang Fan, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">IJCAI 2021</a>
+                                <a href="https://web.archive.org/web/20210813010629id_/https://www.ijcai.org/proceedings/2021/0161.pdf"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/Tracklet.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>3D multi-object tracking in point clouds based on prediction confidence-guided data association</h3>
+                            <p class="publication-authors"><b>Hai Wu</b>, Wenkai Han, Chenglu Wen, Xin Li, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">IEEE TITS 2021</a>
+                                <a href="https://ieeexplore.ieee.org/abstract/document/9352500"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/tracking.gif" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>Indoor 3D human trajectory reconstruction using surveillance camera videos and point clouds</h3>
+                            <p class="publication-authors">Yudi Dai, Chenglu Wen, <b>Hai Wu</b>, Yulan Guo, Longbiao Chen, Cheng Wang</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">IEEE TCSVT 2021</a>
+                                <a href="https://drive.google.com/file/d/1H0q43zfr5t2ozohzFAJs3RlHSN4-V6Y_/view"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/human_trajectory.png" alt="Publication" class="publication-img">
+                    </div>
+
+                    <div class="publication-item hidden">
+                        <div class="publication-content">
+                            <h3>Recovery of urban 3D road boundary via multi-source data</h3>
+                            <p class="publication-authors">Chenglu Wen, Changbin You, <b>Hai Wu</b>, Cheng Wang, Xiaoliang Fan, Jonathan Li</p>
+                            <div class="publication-links">
+                                <a class="publication-venue">ISPRS Journal of Photogrammetry and Remote Sensing 2019</a>
+                                <a href="https://www.sciencedirect.com/science/article/pii/S0924271619301947"><i class="fas fa-file-pdf"></i> Paper</a>
+                            </div>
+                        </div>
+                        <img src="image/boundary.png" alt="Publication" class="publication-img">
+                    </div>
+
+
+                <button class="more-btn" id="more-publications">Show All Publications</button>
+            </section>
+
+            <!-- Activities Section -->
+            <section class="section delay-2">
+                <h2 class="section-title"><i class="fas fa-tasks"></i> Activities</h2>
+
+                <h3>Reviewer:</h3>
+                <ul class="activities-list">
+                    <li>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</li>
+                    <li>Conference on Neural Information Processing Systems (NeurIPS)</li>
+                    <li>International Conference on Learning Representation (ICLR)</li>
+                    <li>AAAI Conference on Artificial Intelligence (AAAI)</li>
+                    <li>IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</li>
+                    <li>IEEE Transactions on Image Processing (TIP)</li>
+                    <li>IEEE Transactions on Geoscience and Remote Sensing (TGRS)</li>
+                    <li>IEEE Transactions on Intelligent Transportation Systems (TITS)</li>
+                </ul>
+
+                <h3>Internship:</h3>
+                <ul class="activities-list">
+                    <li>Research Intern, March 2022 - June 2022, Inceptio technology, Shanghai, China. Advised by Ruigang Yang.</li>
+                </ul>
+            </section>
+
+            <!-- Awards Section -->
+            <section class="section delay-3">
+                <h2 class="section-title"><i class="fas fa-trophy"></i> Academic Competition and Awards</h2>
+
+                <ul class="awards-list">
+                    <li>National scholarship, 2023</li>
+                    <li>Second prize in data processing at LiDAR Conference, 2023</li>
+                    <li>VirConv-S ranks No.1(car) on the KITTI 2D, 3D and BEV detection leaderboard, 11/2022</li>
+                    <li>VirConvTrack ranks No.1(car) on the KITTI tracking leaderboard, 11/2022</li>
+                    <li>CasTrack ranks No.1(car) on the KITTI tracking leaderboard, 09/2022</li>
+                    <li>TED ranks No.1(car) on the KITTI 3D detection leaderboard, 05/2022</li>
+                    <li>PC-TCNN ranks No.1(car) on the KITTI tracking leaderboard, 01/2021</li>
+                    <li>Excellent student scholarship, 2021</li>
+                </ul>
+            </section>
+
+
+
+        </div>
+    </div>
+
+    <footer>
+        <p class="quote">"The journey is long and arduous, I will explore it with unyielding spirit"</p>
+        <p class="quote">路漫漫其修远兮，吾将上下而求索</p>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 120, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#FAF0E6",
+                    opacity: 0.4,
+                    width: 1.2
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: ["grab", "repulse"] }, // 悬停时吸引+排斥
+                    onclick: { enable: true, mode: ["push", "remove"] }, // 点击时添加或移除粒子
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 200, line_linked: { opacity: 0.7 } },
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 },
+                    remove: { particles_nb: 2 }
+                }
+            },
+            retina_detect: true
+        });
+    });
+</script>
 </body>
 </html>
