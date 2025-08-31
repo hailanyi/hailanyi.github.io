@@ -788,49 +788,70 @@
         <p class="quote">路漫漫其修远兮，吾将上下而求索</p>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 120, density: { enable: true, value_area: 800 } },
-                color: { value: "#ffffff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#FAF0E6",
-                    opacity: 0.4,
-                    width: 1.2
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 120, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#ffffff",
+                        opacity: 0.4,
+                        width: 1.2
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        out_mode: "out",
+                        bounce: false
+                    }
                 },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: ["grab", "repulse"] }, // 悬停时吸引+排斥
-                    onclick: { enable: true, mode: ["push", "remove"] }, // 点击时添加或移除粒子
-                    resize: true
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    }
                 },
-                modes: {
-                    grab: { distance: 200, line_linked: { opacity: 0.7 } },
-                    repulse: { distance: 100, duration: 0.4 },
-                    push: { particles_nb: 4 },
-                    remove: { particles_nb: 2 }
+                retina_detect: true
+            });
+
+            // Show more publications functionality
+            const moreBtn = document.getElementById('more-publications');
+            const hiddenPublications = document.querySelectorAll('.publication-item.hidden');
+            let showingAll = false;
+
+            moreBtn.addEventListener('click', function() {
+                hiddenPublications.forEach(item => {
+                    item.classList.toggle('hidden');
+                });
+
+                if (showingAll) {
+                    moreBtn.textContent = 'Show All Publications';
+                    window.scrollBy(0, -200); // Smooth scroll up a bit
+                } else {
+                    moreBtn.textContent = 'Show Selected Publications';
                 }
-            },
-            retina_detect: true
+
+                showingAll = !showingAll;
+            });
+
+            // Add animation delays for sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.2}s`;
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
